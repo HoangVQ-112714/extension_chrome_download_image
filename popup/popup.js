@@ -3,24 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "fetchImages" }, async response => {
+            const folderName = document.getElementById("folder-name").value.trim();
+            if (!folderName) {
+                alert("Điền tên thư mục khi lưu");
+                return;
+            }
+
+            chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+                chrome.tabs.sendMessage(tabs[0].id, {action: "fetchImages"}, async response => {
                     if (response && response.images && Array.isArray(response.images)) {
                         const zip = new JSZip();
 
                         const promises = response.images.map(async (url, index) => {
                             const response = await fetch(url);
                             const blob = await response.blob();
-                            const fileName = `image-${index + 1}.jpg`;
+                            const fileName = `${folderName}-${index + 1}.jpg`;
                             zip.file(fileName, blob);
                         });
 
                         await Promise.all(promises);
 
-                        zip.generateAsync({ type: "blob" }).then(content => {
+                        zip.generateAsync({type: "blob"}).then(content => {
                             const link = document.createElement("a");
                             link.href = URL.createObjectURL(content);
-                            link.download = "images.zip";
+                            link.download = `${folderName}.zip`;
                             link.click();
                         });
                     } else {

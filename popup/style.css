@@ -1,0 +1,9 @@
+label {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+button {
+    border-radius: 10px;
+    margin-top: 5px;
+}

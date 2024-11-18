@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Image Downloader</title>
     <script src="popup.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="../sctipt/jszip.js" ></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="../scripts/jszip.js"></script>
 
 </head>
 <body>
-<button id="download-btn">Download Images</button>
+    <div id="container">
+        <div class="box">
+            <label for="folder-name">Tên thư mục</label>
+            <input type="text" id="folder-name" name="name-folder">
+        </div>
+
+        <button id="download-btn">Tải ảnh xuống</button>
+    </div>
 </body>
 </html>
